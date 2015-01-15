@@ -26,11 +26,13 @@ class openstack::common::nova ($is_compute    = false) {
 
   nova_config { 'DEFAULT/default_floating_pool': value => 'public' }
 
-  class { '::nova::api':
-    admin_password                       => $::openstack::config::nova_password,
-    auth_host                            => $controller_management_address,
-    enabled                              => $is_controller,
-    neutron_metadata_proxy_shared_secret => $::openstack::config::neutron_shared_secret,
+  if $is_controller {
+    class { '::nova::api':
+      admin_password                       => $::openstack::config::nova_password,
+      auth_host                            => $controller_management_address,
+      enabled                              => $is_controller,
+      neutron_metadata_proxy_shared_secret => $::openstack::config::neutron_shared_secret,
+     }
   }
 
   class { '::nova::vncproxy':

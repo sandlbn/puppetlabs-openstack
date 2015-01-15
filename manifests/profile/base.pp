@@ -31,6 +31,5 @@ class openstack::profile::base {
   $api_matches = ($api_address == $controller_api_address)
   $storage_api_matches = ($api_address == $storage_api_address)
 
-  $is_controller = ($management_matches and $api_matches)
-  $is_storage    = ($storage_management_matches and $storage_api_matches)
+  $is_controller = ($management_matches and $api_matches and $storage_management_matches and $storage_api_matches)
 }
